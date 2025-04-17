@@ -36,7 +36,7 @@ sequenceDiagram
 ```
 
 ```mermaid
-graph TB
+graph LR
     User["Operator/Administrator"] -->|"Access via Tor"| TorNetwork["Tor Network"]
     TorNetwork -->|"Hidden Service"| C2Server["C2 Server Infrastructure"]
     C2Server -->|"Command Distribution"| Clients["Client Network"]
