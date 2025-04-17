@@ -35,6 +35,7 @@ sequenceDiagram
     end
 ```
 ```mermaid
+%%{init: {'theme': 'neutral', 'flowchart': {'useMaxWidth': false, 'htmlLabels': true, 'curve': 'basis'}}}%%
 graph TB
     subgraph "Internet"
         User["Operator/Administrator"]
