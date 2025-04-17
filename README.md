@@ -75,12 +75,6 @@ HiddenServicePort 80 127.0.0.1:443
 EOF
 ```
 
-Initialize database:
-```sql
-CREATE USER scream WITH PASSWORD '$(openssl rand -hex 32)';
-CREATE DATABASE scream_research OWNER scream;
-```
-
 ## 🖥️ Dashboard Features
 
 ```mermaid
