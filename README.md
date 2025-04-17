@@ -36,7 +36,7 @@ sequenceDiagram
 ```
 
 ```mermaid
-graph LR
+graph TB
     User["Operator/Administrator"] -->|"Access via Tor"| TorNetwork["Tor Network"]
     TorNetwork -->|"Hidden Service"| C2Server["C2 Server Infrastructure"]
     C2Server -->|"Command Distribution"| Clients["Client Network"]
@@ -45,9 +45,14 @@ graph LR
 
 ```mermaid
 graph LR
-    WebServer["HTTPS Web Server\n(Port 443)"] |"Internal API"| C2Server["Command & Control Server\n(Port 7002)"]
-    C2Server |"Data Storage"| Database["PostgreSQL Database"]
-    TorProxy["Tor Hidden Service Proxy"] -->|"Local Forward"| WebServer
+    WebServer["HTTPS Web Server(Port 443)"] --- C2Server["Command & Control Server(Port 7002)"]
+    C2Server --- Database["PostgreSQL Database"]
+    TorProxy["Tor Hidden Service Proxy"] --> WebServer
+    
+    %% Add labels to connections
+    WebServer ---|"Internal API"| C2Server
+    C2Server ---|"Data Storage"| Database
+    TorProxy ---|"Local Forward"| WebServer
 ```
 
 ```mermaid
