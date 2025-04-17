@@ -1,4 +1,4 @@
-# SCREAM C2 Framework
+# GoTor C2 Framework
 
 *Advanced Security Research Framework with Tor Support*
 
