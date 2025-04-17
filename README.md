@@ -35,6 +35,97 @@ sequenceDiagram
     end
 ```
 
+graph TB
+    subgraph "Internet"
+        User["Operator/Administrator"]
+        TorNetwork["Tor Network"]
+        style TorNetwork fill:#ddd,stroke:#999,stroke-width:1px
+    end
+    
+    subgraph "C2 Server Infrastructure"
+        WebServer["HTTPS Web Server\n(Port 443)"]
+        C2Server["Command & Control Server\n(Port 7002)"]
+        Database["PostgreSQL Database"]
+        TorProxy["Tor Hidden Service Proxy"]
+        
+        style WebServer fill:#f9f,stroke:#333,stroke-width:1px
+        style C2Server fill:#bbf,stroke:#333,stroke-width:1px
+        style Database fill:#bfb,stroke:#333,stroke-width:1px
+        style TorProxy fill:#fbb,stroke:#333,stroke-width:1px
+    end
+    
+    subgraph "Client Network"
+        Client1["Client 1\n(Windows)"]
+        Client2["Client 2\n(Linux)"]
+        Client3["Client 3\n(macOS)"]
+        ClientN["Client N\n(...)"]
+        
+        style Client1 fill:#e6f7ff,stroke:#333,stroke-width:1px
+        style Client2 fill:#e6f7ff,stroke:#333,stroke-width:1px
+        style Client3 fill:#e6f7ff,stroke:#333,stroke-width:1px
+        style ClientN fill:#e6f7ff,stroke:#333,stroke-width:1px
+    end
+    
+    subgraph "Test Target"
+        TargetSystem["Target System\n(Authorized Only)"]
+        style TargetSystem fill:#ffb380,stroke:#333,stroke-width:1px
+    end
+    
+    %% Connection paths for standard operation
+    User -->|"Tor Browser\nAccess"| TorNetwork
+    TorNetwork -->|"Encrypted\nTraffic"| TorProxy
+    TorProxy -->|"Local\nForward"| WebServer
+    WebServer <-->|"Internal\nAPI"| C2Server
+    C2Server <-->|"Data\nStorage"| Database
+    
+    %% Client connections
+    Client1 -->|"TLS 1.3\nHMAC Authentication"| C2Server
+    Client2 -->|"TLS 1.3\nHMAC Authentication"| C2Server
+    Client3 -->|"TLS 1.3\nHMAC Authentication"| C2Server
+    ClientN -->|"TLS 1.3\nHMAC Authentication"| C2Server
+    
+    %% Test execution flow
+    C2Server -->|"Command\nDistribution"| Client1
+    C2Server -->|"Command\nDistribution"| Client2
+    C2Server -->|"Command\nDistribution"| Client3
+    C2Server -->|"Command\nDistribution"| ClientN
+    
+    %% Test targeting
+    Client1 -->|"Network\nTesting"| TargetSystem
+    Client2 -->|"Network\nTesting"| TargetSystem
+    Client3 -->|"Network\nTesting"| TargetSystem
+    ClientN -->|"Network\nTesting"| TargetSystem
+    
+    %% Heartbeat and status reporting
+    Client1 -.->|"Heartbeat\n(30s)"| C2Server
+    Client2 -.->|"Heartbeat\n(30s)"| C2Server
+    Client3 -.->|"Heartbeat\n(30s)"| C2Server
+    ClientN -.->|"Heartbeat\n(30s)"| C2Server
+    
+    %% Admin interface flow
+    WebServer -->|"User Authentication\nJWT Token"| User
+    
+    %% Security features
+    subgraph "Security Measures"
+        CSRFProtection["CSRF Protection"]
+        TLSEncryption["TLS 1.3 Encryption"]
+        ChallengeResponse["Challenge-Response Auth"]
+        ArgonHashing["Argon2id Password Hashing"]
+        RateLimiting["Request Rate Limiting"]
+        
+        style CSRFProtection fill:#ffe6e6,stroke:#333,stroke-width:1px
+        style TLSEncryption fill:#ffe6e6,stroke:#333,stroke-width:1px
+        style ChallengeResponse fill:#ffe6e6,stroke:#333,stroke-width:1px
+        style ArgonHashing fill:#ffe6e6,stroke:#333,stroke-width:1px
+        style RateLimiting fill:#ffe6e6,stroke:#333,stroke-width:1px
+    end
+    
+    WebServer --- CSRFProtection
+    WebServer --- TLSEncryption
+    C2Server --- ChallengeResponse
+    WebServer --- ArgonHashing
+    C2Server --- RateLimiting
+
 ### Network Testing Capabilities
 
 | Method | Layer | Description | Max Duration |
