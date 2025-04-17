@@ -35,8 +35,6 @@ sequenceDiagram
     end
 ```
 
-High-Level Overview
-
 ```mermaid
 graph TB
     User["Operator/Administrator"] -->|"Access via Tor"| TorNetwork["Tor Network"]
@@ -45,16 +43,12 @@ graph TB
     Clients -->|"Network Testing"| Target["Target Systems"]
 ```
 
-C2 Server Components
-
 ```mermaid
 graph LR
     WebServer["HTTPS Web Server\n(Port 443)"] |"Internal API"| C2Server["Command & Control Server\n(Port 7002)"]
     C2Server |"Data Storage"| Database["PostgreSQL Database"]
     TorProxy["Tor Hidden Service Proxy"] -->|"Local Forward"| WebServer
 ```
-
-Client Connection Flow
 
 ```mermaid
 sequenceDiagram
@@ -68,8 +62,6 @@ sequenceDiagram
     C2Server->>Client: TEST_COMMAND
     Client->>Target: Network Testing
 ```
-
-Security Measures
 
 ```mermaid
 graph TD
