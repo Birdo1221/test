@@ -34,7 +34,7 @@ sequenceDiagram
         Client->>Server: PONG (30s interval)
     end
 ```
-
+```mermaid
 graph TB
     subgraph "Internet"
         User["Operator/Administrator"]
@@ -125,6 +125,7 @@ graph TB
     C2Server --- ChallengeResponse
     WebServer --- ArgonHashing
     C2Server --- RateLimiting
+```
 
 ### Network Testing Capabilities
 
